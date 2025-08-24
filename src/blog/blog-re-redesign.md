@@ -19,7 +19,7 @@ summary: '一次化繁为简的开发经历。我放弃了 Next.js 与 TailwindC
 
 ## 触底
 
-在[第三次博客重构记录](https://blog.kaai.dev/post/blog-redesign)中，我用轻松的语气写下遇到的困难以及解决方法。但现在，我只想说我受够了，我搞砸了，**I f\*ckd up.**
+在[第三次博客重构记录](https://blog-next-archive.kaai.dev/post/blog-redesign)中，我用轻松的语气写下遇到的困难以及解决方法。但现在，我只想说我受够了，我搞砸了，**I f\*ckd up.**
 
 ### 能力越大，配置越多
 
