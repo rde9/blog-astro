@@ -14,7 +14,7 @@ export interface Props {
 
 let { title, description } = Astro.props;
 title = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
-description = SITE_DESCRIPTION;
+description = description || SITE_DESCRIPTION;
 
 const tagsWithCount = await getAllTagsWithCount();
 ---
