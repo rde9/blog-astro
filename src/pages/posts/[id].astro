@@ -1,0 +1,101 @@
+---
+import { getCollection, render } from "astro:content";
+import TOC from "@components/TOC.astro";
+import Layout from "@layout/Layout.astro";
+import { options } from "@utils/date";
+import "@styles/article.css";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+---
+
+<Layout title={post.data.title} description={post.data.summary}>
+  <main>
+    <h1>{post.data.title}</h1>
+    <time datetime={post.data.date.toISOString()}>
+      {post.data.date.toLocaleDateString("en-US", options)}
+    </time>
+    <Content />
+    <hr />
+    <section class="tags">
+      {post.data.tags?.map((tag: string) => <a href={`/tag/${tag}`}>{tag}</a>)}
+    </section>
+  </main>
+  {headings && headings.length > 0 && <TOC headings={headings} />}
+
+  <script>
+    /* --- TOC ScrollSpy 监听 ---*/
+    addIntersectionObserver();
+
+    function addIntersectionObserver() {
+      const observer = new IntersectionObserver(
+        (sections) => {
+          sections.forEach((section) => {
+            const heading = section.target.querySelector("h2, h3, h4");
+            if (!heading) return;
+            const id = heading.getAttribute("id");
+
+            // 同时处理桌面端和移动端 TOC
+            const desktopToc = document.querySelector(
+              ".desktop-toc-wrapper .toc"
+            );
+            const mobileToc = document.querySelector(".mobile-toc-drawer .toc");
+
+            [desktopToc, mobileToc].forEach((tocEl) => {
+              if (!tocEl) return;
+
+              const link = tocEl.querySelector(`li a[href="#${id}"]`);
+              if (!link) return;
+
+              if (section.isIntersecting) {
+                link.classList.add("active");
+                // 确保当前活动链接在TOC视图中可见
+                const linkRect = link.getBoundingClientRect();
+                const tocRect = tocEl.getBoundingClientRect();
+                const isVisible =
+                  linkRect.top >= tocRect.top &&
+                  linkRect.bottom <= tocRect.bottom;
+                if (!isVisible) {
+                  const current = tocEl.scrollTop;
+                  const delta =
+                    linkRect.top -
+                    tocRect.top -
+                    (tocEl.clientHeight / 2 - linkRect.height / 2);
+                  tocEl.scrollTo({ top: current + delta, behavior: "smooth" });
+                }
+              } else {
+                link.classList.remove("active");
+              }
+            });
+          });
+        },
+        {
+          rootMargin: "-45% 0px",
+        }
+      );
+
+      document.querySelectorAll("section").forEach((section) => {
+        observer.observe(section);
+      });
+    }
+
+    /* --- 移动端 TOC 抽屉 ---*/
+    const tocToggle = document.querySelector(".mobile-toc-toggle");
+    const tocDrawer = document.querySelector(".mobile-toc-drawer");
+    if (tocToggle && tocDrawer) {
+      tocToggle.addEventListener("click", () => {
+        const isOpen = tocDrawer.classList.toggle("open");
+        tocDrawer.setAttribute("aria-hidden", String(!isOpen));
+        tocToggle.setAttribute("aria-expanded", String(isOpen));
+      });
+    }
+  </script>
+</Layout>

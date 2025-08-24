@@ -1,0 +1,17 @@
+---
+export interface Props {
+  tagsWithCount?: [string, number][];
+}
+
+const { tagsWithCount } = Astro.props;
+---
+
+<header>
+  <a href="/" class="logo"></a>
+  <nav>
+    <p>
+      {tagsWithCount?.map(([tag, count]) => <a href={`/tag/${tag}`}>{tag}({count})</a>)}
+      <a href="https://asana.moe" target="_blank">关于🐣</a>
+    </p>
+  </nav>
+</header>

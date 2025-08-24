@@ -1,0 +1,56 @@
+---
+import Header from "@components/Header.astro";
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_AUTHOR, SITE_OG_IMAGE } from "@config";
+import { getAllTagsWithCount } from "@utils/tag";
+import { Font } from "astro:assets";
+import "@styles/base.css";
+import "@styles/components.css";
+import "katex/dist/katex.min.css";
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+let { title, description } = Astro.props;
+title = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+description = SITE_DESCRIPTION;
+
+const tagsWithCount = await getAllTagsWithCount();
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐣</text></svg>"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <!-- Meta Tags -->
+    <meta name="title" content={title} />
+    <meta name="description" content={description}/>
+    <meta name="author" content={SITE_AUTHOR} />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:site_name" content={SITE_TITLE} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.toString()} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={SITE_OG_IMAGE} />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:url" content={Astro.url.toString()} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={SITE_OG_IMAGE} />
+    <Font cssVariable="--font-jetbrains-mono" />
+    <Font cssVariable="--font-figtree" />
+  </head>
+  <body>
+    <Header tagsWithCount={tagsWithCount} />
+    <slot />
+  </body>
+</html>

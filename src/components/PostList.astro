@@ -1,0 +1,26 @@
+---
+import { options } from '@utils/date';
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  posts: CollectionEntry<"blog">[];
+  tag?: string;
+}
+const { posts, tag } = Astro.props;
+---
+<main>
+  {tag && <h1>{tag}</h1>}
+  <ul class="post-list">
+    {
+      posts.map(post => (
+        <li>
+          <span>
+            <time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString("en-US", options)}</time>
+          </span>
+          <a href={`/posts/${post.id}`}>{post.data.title}</a>
+          <p>{post.data.summary}</p>
+        </li>
+      ))
+    }
+  </ul>
+</main>

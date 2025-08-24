@@ -1,0 +1,37 @@
+---
+import type { MarkdownHeading } from "astro";
+import TOCBase from "./TOCBase.astro";
+
+export interface TOCProps {
+  headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+---
+<>
+  <nav class="desktop-toc-wrapper">
+    <TOCBase headings={headings} />
+  </nav>
+  <button
+    class="mobile-toc-toggle"
+    aria-expanded="false"
+    aria-controls="mobile-toc-drawer"
+    title="table-of-contents"
+    aria-label="Table of contents"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      viewBox="0 0 24 24"
+      ><path
+        fill="currentColor"
+        fill-rule="evenodd"
+        d="M10 4h10a1 1 0 0 1 0 2H10a1 1 0 1 1 0-2m0 7h10a1 1 0 0 1 0 2H10a1 1 0 0 1 0-2m0 7h10a1 1 0 0 1 0 2H10a1 1 0 0 1 0-2M5 7a2 2 0 1 1 0-4a2 2 0 0 1 0 4m0 7a2 2 0 1 1 0-4a2 2 0 0 1 0 4m0 7a2 2 0 1 1 0-4a2 2 0 0 1 0 4"
+      ></path></svg
+    >
+  </button>
+  <nav class="mobile-toc-drawer" aria-hidden="true">
+    <TOCBase headings={headings} />
+  </nav>
+</>
