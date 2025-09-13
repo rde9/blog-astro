@@ -6,7 +6,10 @@
 
   --spacing: 1.5rem;
   --radius: 6px;
-  --max-width: 1600px;
+  --max-width: 1536px;
+  --lk-ud-thickness: 0.2ex;
+  --lk-ud-thickness-hover: 0.3ex;
+  --lk-ud-offset: 0.3ex;
 
   /* Light theme */
   --nc-tx-1: #392923;
@@ -131,10 +134,10 @@ h6 { font-size: .875rem; }
 a {
   color: currentColor;
   text-decoration-color: var(--nc-lk-2);
-  text-decoration-thickness: 0.2ex;
-  text-underline-offset: 0.3ex;
+  text-decoration-thickness: var(--lk-ud-thickness);
+  text-underline-offset: var(--lk-ud-offset);
 }
-a:hover { text-decoration-thickness: 0.3ex; }
+a:hover { text-decoration-thickness: var(--lk-ud-thickness-hover); }
 
 abbr:hover { cursor: help; }
 
@@ -243,7 +246,28 @@ textarea, select, input {
   box-sizing: border-box;
 }
 
-img { max-width: 100%; height: auto; border-radius: var(--radius); }
+figure {
+  display: block;
+  margin: 0;
+  overflow-x: auto;
+}
+
+img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  margin-inline: auto;
+  border-radius: var(--radius);
+}
+
+figcaption {
+  position: sticky;
+  left: 0;
+  text-align: center;
+  font-size: 1.25rem;
+  opacity: 0.5;
+  margin-block: 1rem;
+}
 
 /* Global main layout */
 main {
@@ -264,4 +288,5 @@ time { opacity: 0.5; }
 
 @media screen and (max-width: 640px) {
   body { font-size: 1.25rem; }
+  figcaption { font-size: 1.15rem;}
 }

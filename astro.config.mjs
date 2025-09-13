@@ -3,6 +3,8 @@ import { defineConfig, fontProviders } from 'astro/config';
 import sectionize from '@hbsnow/rehype-sectionize';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import rehypeFigure from '@microflash/rehype-figure'
+import rehypeUnwrapImages from 'rehype-unwrap-images'
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,6 +15,8 @@ export default defineConfig({
     rehypePlugins: [
       sectionize,
       rehypeKatex,
+      rehypeUnwrapImages,
+      rehypeFigure
     ],
     shikiConfig: {
       themes: {
