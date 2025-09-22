@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
 import sectionize from '@hbsnow/rehype-sectionize';
+import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeFigure from '@microflash/rehype-figure'
@@ -10,6 +11,7 @@ import rehypeUnwrapImages from 'rehype-unwrap-images'
 export default defineConfig({
   markdown: {
     remarkPlugins: [
+      remarkGfm,
       remarkMath,
     ],
     rehypePlugins: [

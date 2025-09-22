@@ -3,7 +3,9 @@ import TOCHeading from '@components/TOCHeading.astro';
 
 const { headings } = Astro.props;
 
-const toc = buildHierarchy(headings);
+// Filter out sr-only headings (e.g. footnotes)
+const filtered = headings.filter((h: any) => !h.slug.includes('footnote-label'));
+const toc = buildHierarchy(filtered);
 
 function buildHierarchy(headings: any) {
   const toc: any[] = [];

@@ -1,4 +1,4 @@
-/* Article: TOC, Tags */
+/* Article: TOC, Tags, Footnotes */
 
 /* TOC */
 .desktop-toc-wrapper {
@@ -125,4 +125,9 @@ section.tags {
 
   & a { display: inline-flex; align-items: center; }
   & a::before { content: '🏷️'; }
+}
+
+/* Footnotes */
+.data-footnote-backref {
+  font-family: var(--font-sans); /* no emoji */
 }
