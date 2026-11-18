@@ -31,11 +31,18 @@ export default defineConfig({
     }
   },
   fonts: [{
-    provider: fontProviders.google(),
-    name: 'Figtree',
-    cssVariable: '--font-figtree',
-    weights: [400, 600],
-    fallbacks: [],
+    provider: fontProviders.local(),
+    name: 'Allo',
+    cssVariable: '--font-allo',
+    options: {
+      variants: [
+        {
+          src: ['./src/assets/fonts/AlloVariableFriendly.woff2'],
+          weight: '100 900',
+          style: 'normal',
+        },
+      ],
+    },
   },
   {
     provider: fontProviders.google(),
